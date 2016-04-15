@@ -6,6 +6,11 @@ const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 const TARGET = process.env.npm_lifecycle_event;
+
+// This allows us to control environment specific functionality through .babelrc.
+//In this case we want to enable HMR just for development
+process.env.BABEL_ENV = TARGET;
+
 const PATHS = {
     app: path.join(__dirname, 'app'),
     build: path.join(__dirname, 'build')
