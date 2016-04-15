@@ -1,7 +1,7 @@
 import React from 'react';
 import Note from './Note.jsx';
 
-export default ({notes}) => {
+export default ({notes, onEdit}) => {
     return (
         //<ul>{notes.map(note => ...}</ul> -
         //{}'s allow us to mix JavaScript syntax within JSX.
@@ -13,7 +13,8 @@ export default ({notes}) => {
         //If not set, React will give a warning. See Multiple Components for more information.
         <ul>{notes.map(note =>
                 <li key={note.id}>
-                    <Note task={note.task} />
+                    <Note task={note.task}
+                    onEdit={onEdit.bind(null, note.id)}/>
                 </li>
             )}
         </ul>
