@@ -38,10 +38,9 @@ const common = {
 
 // Default configuration
 if(TARGET === 'start' || !TARGET) {
-    // NOTE replaced
-    // module.exports = merge(common, {});
 
     module.exports = merge(common, {
+        devtool: 'eval-source-map',
         devServer: {
             contentBase: PATHS.build,
 
