@@ -2,6 +2,8 @@ import uuid from 'node-uuid';
 
 import React from 'react';
 
+import Note from './Note.jsx'
+
 export default class App extends React.Component {
 
     constructor(props) {
@@ -42,7 +44,9 @@ export default class App extends React.Component {
             <div>
                 <button onClick={this.addNote}>+</button>
                 <ul>{notes.map(note =>
-                        <li key={note.id}>{note.task}</li>
+                        <li key={note.id}>
+                            <Note task={note.task} />
+                        </li>
                     )}
                 </ul>
             </div>
@@ -72,6 +76,6 @@ export default class App extends React.Component {
                 task: 'New task'
             }])
         },
-        () => console.log('set state'));
+        () => console.log('this feature can help you log something after setState'));
     };
 }
