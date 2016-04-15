@@ -2,7 +2,7 @@ import uuid from 'node-uuid';
 
 import React from 'react';
 
-import Notes from './Notes.jsx'
+import Notes from './Notes.jsx';
 
 export default class App extends React.Component {
 
@@ -25,7 +25,7 @@ export default class App extends React.Component {
                 }
             ]
         };
-    }
+    };
 
     render() {
 
@@ -38,7 +38,7 @@ export default class App extends React.Component {
                 <Notes notes={notes} />
             </div>
         )
-    }
+    };
 
     // We are using an experimental feature known as property
     // initializer here. It allows us to bind the method `this`
@@ -65,4 +65,4 @@ export default class App extends React.Component {
         },
         () => console.log('this feature can help you log something after setState'));
     };
-}
+};
