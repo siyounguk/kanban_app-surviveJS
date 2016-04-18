@@ -11,8 +11,8 @@ export default ({notes, onEdit, onDelete}) => {
         //In order to tell React in which order to render the elements, we use the key property.
         // It is important that this is unique or else React won't be able to figure out the correct order in which to render.
         //If not set, React will give a warning. See Multiple Components for more information.
-        <ul>{notes.map(note =>
-                <li key={note.id}>
+        <ul className="notes">{notes.map(note =>
+                <li className="note" key={note.id}>
                     <Note
                         task={note.task}
                         onEdit={onEdit.bind(null, note.id)}
