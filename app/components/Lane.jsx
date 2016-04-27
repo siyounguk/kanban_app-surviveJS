@@ -20,7 +20,7 @@ export default class Lane extends React.Component {
                     <Editable className="lane-name" editing={lane.editing}
                         value={lane.name} onEdit={this.editName} />
                     <div className="lane-delete">
-                        <button onCLick={this.deleteLane}>x</button>
+                        <button onClick={this.deleteLane}>x</button>
                     </div>
                 </div>
 
@@ -50,6 +50,8 @@ export default class Lane extends React.Component {
         NoteActions.update({id, task, editing: false});
     }
     addNote = (e) => {
+        e.stopPropagation();
+
         const laneId = this.props.lane.id;
         const note = NoteActions.create({task: 'New Task'});
 
@@ -72,7 +74,7 @@ export default class Lane extends React.Component {
 
         // Don't modify if trying to set an empty value
         if(!name.trim()) {
-            LaneActions.update({id: laneId, editing: true});
+            LaneActions.update({id: laneId, editing: false});
 
             return;
         }
