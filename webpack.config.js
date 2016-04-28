@@ -7,6 +7,8 @@ const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const pkg = require('./package.json');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
+
 
 const TARGET = process.env.npm_lifecycle_event;
 
@@ -126,6 +128,7 @@ if(TARGET === 'build') {
             chunkFilename: '[chunkhash].js'
         },
         plugins: [
+            new CleanPlugin([PATHS.build]),
             // Extract vendor and manifest files
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['vendor', 'manifest']
