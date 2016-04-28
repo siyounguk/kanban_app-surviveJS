@@ -6,6 +6,8 @@ const NpmInstallPlugin = require('npm-install-webpack-plugin');
 // Load *package.json* so we can use `dependencies` from there
 const pkg = require('./package.json');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const TARGET = process.env.npm_lifecycle_event;
 
 // This allows us to control environment specific functionality through .babelrc.
@@ -59,7 +61,15 @@ const common = {
                 include: PATHS.app
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'node_modules/html-webpack-template/index.ejs',
+            title: 'Kanban app',
+            appMountId: 'app',
+            inject: false
+        })
+    ]
 };
 
 // Default configuration
@@ -68,7 +78,6 @@ if(TARGET === 'start' || !TARGET) {
     module.exports = merge(common, {
         devtool: 'eval-source-map',
         devServer: {
-            contentBase: PATHS.build,
 
             // Enable history API fallback so HTML5 History API based
             // routing works. This is a good default that will come
