@@ -112,6 +112,10 @@ if(TARGET === 'build') {
           })
         },
         plugins: [
+            // Extract vendor and manifest files
+            new webpack.optimize.CommonsChunkPlugin({
+                names: ['vendor', 'manifest']
+            }),
             // Setting DefinePlugin affects React library size!
             // DefinePlugin replaces content "as is" so we need some extra quotes
             // for the generated code to make sense
