@@ -2,15 +2,12 @@ const path = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
-
-// Load *package.json* so we can use `dependencies` from there
 const pkg = require('./package.json');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
-
-
 const TARGET = process.env.npm_lifecycle_event;
+
+const ExtractTextPlugin = require ('extract-text-webpack-plugin');
 
 // This allows us to control environment specific functionality through .babelrc.
 //In this case we want to enable HMR just for development
@@ -43,14 +40,6 @@ const common = {
     },
     module: {
         loaders: [
-                // setup CSS-loader
-            {
-                // Test expects a RegExp! Note the slashes!
-                test: /\.css$/,
-                loaders: ['style', 'css'],
-                // Include accepts either a path or an array of paths.
-                include: PATHS.app
-            },
                 // Set up jsx. This accepts js too thanks to RegExp
             {
                 test: /\.jsx?$/,
@@ -102,6 +91,16 @@ if(TARGET === 'start' || !TARGET) {
             host: process.env.HOST,
             port: process.env.PORT
         },
+        module: {
+          loaders: [
+            // Define development specific CSS setup
+            {
+              test: /\.css$/,
+              loaders: ['style', 'css'],
+              include: PATHS.app
+            }
+          ]
+        },
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
             new NpmInstallPlugin({
@@ -127,8 +126,22 @@ if(TARGET === 'build') {
             filename: '[name].[chunkhash].js',
             chunkFilename: '[chunkhash].js'
         },
+        module: {
+            loaders: [
+                // Extract CSS during build
+                {
+                    test: /\.css$/,
+                    loader: ExtractTextPlugin.extract('style', 'css'),
+                    include: PATHS.app
+                }
+            ]
+        },
         plugins: [
             new CleanPlugin([PATHS.build]),
+
+            // Output extracted CSS to a file
+            new ExtractTextPlugin('[name].[chunkhash].css'),
+
             // Extract vendor and manifest files
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['vendor', 'manifest']
